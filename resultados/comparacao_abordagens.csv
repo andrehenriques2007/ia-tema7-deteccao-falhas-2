@@ -1,0 +1,17 @@
+alvo,c_FN_c_FP,abordagem,custo,poupanca_pct,precisao,recall,F1,FP,FN
+falha,5,Regras,493,29.57,0.23,0.94,0.36,448,9
+falha,5,ML,480,31.43,0.27,0.7,0.39,270,42
+falha,5,Híbrido (hill-climbing),353,49.57,0.41,0.7,0.51,143,42
+falha,5,Híbrido (genético),350,50.0,0.38,0.75,0.5,175,35
+falha,10,Regras,538,61.57,0.23,0.94,0.36,448,9
+falha,10,ML,675,51.79,0.25,0.74,0.37,315,36
+falha,10,Híbrido (hill-climbing),536,61.71,0.29,0.82,0.43,286,25
+falha,10,Híbrido (genético),504,64.0,0.28,0.86,0.43,304,20
+falha,20,Regras,628,77.57,0.23,0.94,0.36,448,9
+falha,20,ML,908,67.57,0.17,0.89,0.29,608,15
+falha,20,Híbrido (hill-climbing),599,78.61,0.25,0.93,0.39,399,10
+falha,20,Híbrido (genético),557,80.11,0.25,0.94,0.39,397,8
+falha_nas_proximas_24h,1,Regras,2228,13.81,0.81,0.18,0.3,111,2117
+falha_nas_proximas_24h,1,ML,738,71.45,0.9,0.8,0.85,227,511
+falha_nas_proximas_24h,1,Híbrido (hill-climbing),738,71.45,0.9,0.8,0.85,221,517
+falha_nas_proximas_24h,1,Híbrido (genético),739,71.41,0.9,0.8,0.85,229,510

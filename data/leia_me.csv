@@ -1,0 +1,39 @@
+Tema 7 — Automação Inteligente e Deteção de Falhas · Dados sintéticos de sensores;;
+UC 04914 — Introdução à Inteligência Artificial · Dados SINTÉTICOS gerados para fins pedagógicos (não representam pessoas, empresas ou sistemas reais).;;
+;;
+Contexto;;
+Séries temporais horárias de 12 máquinas de uma linha de produção simulada (400 ciclos cada), com leituras de temperatura, velocidade, binário, desgaste, vibração, pressão e corrente, e rótulos de falha por tipo. Inspirado no AI4I 2020 Predictive Maintenance Dataset, acrescentando degradação progressiva de rolamentos, picos de sensor e um rótulo de deteção antecipada.;;
+;;
+Folhas deste ficheiro;;
+Leituras_Sensores;"4800 leituras (140 com falha; 53.9% das leituras precedem uma falha nas 24 h seguintes).";
+Conhecimento_Dominio;8 regras indicativas do 'técnico' para construir o módulo baseado em conhecimento.;
+;;
+Como os dados foram gerados;;
+"• Falhas simuladas (e respetiva regra de geração): TWF quando o desgaste atinge a vida útil (200–240 min); HDF com diferença de temperatura < 8,6 K e rpm < 1380 (prob. 0,7); PWF com potência < 3500 W ou > 9000 W (prob. 0,35); OSF quando desgaste×binário excede o limiar da qualidade (prob. 0,6); BRG quando o índice latente de degradação do rolamento passa 1,0 (vibração ?, pressão ? nas horas anteriores); RNF aleatória (0,15%).";;
+• Após uma falha ou manutenção preventiva a ferramenta/rolamento são repostos.;;
+• Cerca de 1% das leituras têm picos de sensor que NÃO são falhas (coluna leitura_anomala_sensor — não usar como feature, serve para analisar falsos alarmes). 1% de valores em falta em 3 sensores.;;
+• Contagem por tipo de falha: TWF 63, PWF 24, BRG 22, OSF 17, HDF 10, RNF 4.;;
+;;
+Desafios sugeridos para o grupo;;
+1. Explorar as séries por máquina (gráficos temporais) e ver como vibração/pressão evoluem antes das falhas BRG.;;
+2. Implementar o módulo baseado em regras a partir de Conhecimento_Dominio e avaliá-lo (precisão, recall, F1, falsos alarmes).;;
+"3. Treinar um classificador (Random Forest, SVM) para 'falha' e/ou 'falha_nas_proximas_24h'; atenção à divisão treino/teste por máquina ou por tempo (evitar fuga de informação).";;
+4. Criar features temporais (médias móveis, tendência da vibração, variação desde a leitura anterior).;;
+5. Construir um sistema híbrido (regras para casos críticos evidentes + ML para os ambíguos) e comparar as três abordagens.;;
+6. Discutir interpretabilidade vs desempenho e o custo de falsos alarmes numa fábrica real.;;
+;;
+Dicionário de dados — folha «Leituras_Sensores»;;
+Campo;Tipo;Descrição
+id_maquina, tipo_qualidade;categoria;Máquina e qualidade do produto (L/M/H).
+timestamp, ciclo;tempo;Leitura horária.
+temp_ar_K, temp_processo_K;real (K);Temperatura ambiente e do processo.
+velocidade_rpm, binario_Nm;real;Velocidade de rotação e binário.
+desgaste_ferramenta_min;real;Minutos de uso da ferramenta desde a última troca.
+vibracao_mm_s;real;Vibração RMS.
+pressao_bar;real;Pressão do circuito de lubrificação.
+corrente_A;real;Corrente do motor.
+horas_desde_manutencao;inteiro;Horas desde a última manutenção.
+falha;ALVO binário;1 se ocorreu falha nesta leitura.
+tipo_falha;ALVO multiclasse;TWF, HDF, PWF, OSF, BRG, RNF ou nenhuma.
+falha_nas_proximas_24h;ALVO binário;1 se a mesma máquina falha nas 24 leituras seguintes (deteção antecipada).
+leitura_anomala_sensor;sim/não;"Pico de sensor injetado (apenas para análise; não usar no modelo)."
